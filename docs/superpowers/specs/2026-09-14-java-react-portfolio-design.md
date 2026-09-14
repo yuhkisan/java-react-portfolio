@@ -18,13 +18,7 @@ java-react-portfolio/
 
 ## ブランチとレビュー
 
-`main` はCIが成功したレビュー済みの状態に保ち、実装を直接コミットしない。Codexは `codex/*` の短命な作業ブランチで実装、テスト、コミット、PR作成を担当する。リポジトリ所有者はPRの差分と検証結果を確認し、必要な修正を依頼した後、問題がなければマージする。
-
-マージには通常のMerge Commitを使用する。
-
-作業ブランチは原則として最新の `main` から作成する。先行作業へ依存する場合だけ親作業ブランチから派生させ、親PRがマージされた後に `main` を取り込む。1つのPRは、レビューと検証が可能な1つの機能または縦の移行単位に限定する。
-
-GitHub操作にはリポジトリ所有者の認証を利用するため、GitHub上の別アカウントによる承認とはならない。役割として、Codexを実装担当、リポジトリ所有者をレビューおよびマージ判断担当として分離する。
+Codexは `codex/*` でPRを作成し、レビュー後にMerge Commitで `main` へ取り込む。
 
 ## 技術構成
 
@@ -41,7 +35,7 @@ GitHub操作にはリポジトリ所有者の認証を利用するため、GitHu
 
 Next.jsは基本的にクライアントサイドのSPAとして使用する。Server ComponentsやSSRを必須とはせず、独立したSpring Boot APIをブラウザから呼び出す。
 
-TanStack QueryはSpring Boot上のサーバー状態だけを管理する。モーダルの開閉、入力途中の値など、ローカルなUI状態にはReactの `useState` などを使用する。Redux、RTK Query、Jotai、Zustandは初期構成に含めない。
+TanStack QueryはSpring Boot上のサーバー状態だけを管理する。モーダルの開閉、入力途中の値など、ローカルなUI状態にはReactの `useState` などを使用する。
 
 ### バックエンド
 
@@ -66,16 +60,6 @@ TanStack QueryはSpring Boot上のサーバー状態だけを管理する。モ�
 
 Spring BootのControllerとDTOを基に、springdoc-openapiが `/v3/api-docs` へOpenAPI仕様を公開する。Orvalはその仕様を入力として、TypeScriptのリクエスト／レスポンス型、APIクライアント、TanStack Query hooksを `frontend/` 配下へ生成する。
 
-```text
-Spring Controller・DTO
-        ↓
-OpenAPI (/v3/api-docs)
-        ↓
-Orval
-        ↓
-TypeScript型・APIクライアント・TanStack Query hooks
-```
-
 生成物はリポジトリへコミットする。開発者はバックエンドAPIを変更した後に生成コマンドを実行する。CIでも同じ生成処理を実行し、生成物に未コミット差分があれば失敗させる。
 
 ## 移行方法
@@ -83,13 +67,6 @@ TypeScript型・APIクライアント・TanStack Query hooks
 一度に全機能を書き換えず、画面からAPI、DBまでを縦に通す単位で移行する。
 
 最初の単位はプロジェクト一覧とする。
-
-1. 既存Next.jsフロントエンドを取り込み、現状のビルドとテストを確認する。
-2. Spring BootとPostgreSQLの起動基盤を作る。
-3. プロジェクト一覧APIとDBマイグレーションを実装する。
-4. OpenAPIからTanStack Query hookを生成する。
-5. 既存画面の取得元をNext.js APIからSpring Bootへ変更する。
-6. バックエンド、フロントエンド、E2Eの各テストを通す。
 
 以後、プロジェクト更新・削除、ファイルアップロード、依存関係解析、スキャン結果表示を同じ方法で段階的に移す。対応機能がSpring Boot側で検証できるまでは、既存のNext.js Route HandlerとPrismaを削除しない。全機能の置き換え後に不要なAPI Routes、Prisma、SQLiteを削除する。
 
@@ -109,9 +86,7 @@ Next.jsはバックエンドの業務データを保持しない。キャッシ�
 
 ## エラー処理
 
-バックエンドはSpringの `ProblemDetail` を基礎として、入力エラー、未検出、競合、サーバーエラーを一貫したJSON形式で返す。Bean Validationのエラーは項目単位で識別できる形にする。フロントエンドは生成された型を利用し、画面全体の取得失敗、項目エラー、更新失敗を用途に応じて表示する。
-
-Mutation成功後のキャッシュ無効化は生成コードを直接編集せず、Orval設定または生成コードを包むアプリケーション側のhookで定義する。
+バックエンドはSpringの `ProblemDetail` を基礎としてエラー形式を統一し、Bean Validationのエラーは項目単位で識別できる形にする。
 
 ## テスト方針
 
@@ -129,8 +104,6 @@ Mutation成功後のキャッシュ無効化は生成コードを直接編集せ
 - 本番クラウド構成の確定
 - Reduxなど追加のグローバル状態管理
 - 全画面の一括移行
-
-これらは既存機能のSpring Boot移行が完了してから、独立した変更として検討する。
 
 ## 最初の完了条件
 
