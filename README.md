@@ -1,20 +1,21 @@
 # Java React Portfolio
 
-既存のNext.js製Dependency Vulnerability Scannerをフロントエンドとして引き継ぎ、Java 17とSpring BootによるREST APIを組み合わせたポートフォリオです。
+既存のNext.js製Dependency Vulnerability Scannerをフロントエンドとして引き継ぎ、Java 17とSpring BootによるREST APIを組み合わせるポートフォリオです。
 
-## 構成
+現在は設計段階です。以下の構成と技術スタックを順次実装します。
+
+## 予定構成
 
 ```text
 java-react-portfolio/
 ├─ frontend/        # Next.js
 ├─ backend/         # Spring Boot REST API
-├─ compose.yaml     # PostgreSQL
-└─ README.md
+├─ compose.yaml     # ローカル実行環境
+├─ README.md
+└─ AGENTS.md
 ```
 
-既存リポジトリ `yuhkisan/next-vuln-report-portfolio` は、Gitの履歴を保持した状態で `frontend/` へ取り込みます。
-
-## 技術スタック
+## 採用予定の技術スタック
 
 ### Frontend
 
@@ -27,7 +28,7 @@ java-react-portfolio/
 - Vitest
 - Playwright
 
-Next.jsは基本的にクライアントサイドのSPAとして使用します。TanStack QueryはSpring Boot上のサーバー状態を管理し、ローカルなUI状態にはReactの `useState` などを使用します。
+Next.jsは基本的にクライアントサイドのSPAとして使用する予定です。TanStack QueryでSpring Boot上のサーバー状態を管理し、ローカルなUI状態にはReactの `useState` などを使用します。
 
 ### Backend
 
@@ -44,24 +45,18 @@ Next.jsは基本的にクライアントサイドのSPAとして使用します�
 - MockMvc
 - Testcontainers
 
-ローカル開発ではNext.jsを `localhost:3000`、Spring Bootを `localhost:8080` で起動します。PostgreSQLはDocker Composeで起動します。
+## 予定するローカル開発環境
+
+Next.js、Spring Boot、PostgreSQLはDocker Composeでまとめて起動できる構成にします。Next.jsは `localhost:3000`、Spring Bootは `localhost:8080` で公開する予定です。
 
 ## APIクライアント生成
 
-springdoc-openapiがSpring BootのControllerとDTOからOpenAPI仕様を公開し、OrvalがTypeScriptの型、APIクライアント、TanStack Query hooksを生成します。生成物はコミットし、CIで生成漏れを検出します。
+springdoc-openapiでSpring BootのControllerとDTOからOpenAPI仕様を生成し、OrvalでTypeScriptの型、APIクライアント、TanStack Query hooksを生成する予定です。生成物はコミットし、CIで生成漏れを検出します。
 
-## 移行方針
-
-画面からAPI、DBまでを縦に通す単位で段階的に移行します。最初の対象はプロジェクト一覧です。Spring Boot側で動作を検証できるまでは既存のNext.js Route HandlerとPrismaを残し、全機能の置き換え後に削除します。
-
-## テスト
+## 予定する検証
 
 - JUnit／MockMvcによるバックエンドテスト
 - TestcontainersによるPostgreSQL統合テスト
 - Vitestによるフロントエンドテスト
 - PlaywrightによるE2Eテスト
 - CIによるテスト、lint、build、OpenAPI生成差分の検証
-
-## 開発フロー
-
-Codexは `codex/*` でPRを作成し、レビュー後にMerge Commitで `main` へ取り込みます。
