@@ -8,6 +8,7 @@
 - `main` に直接実装をコミットしない。最新の `main` から `codex/*` ブランチを作成する。
 - 原則として1つの作業Issueに対して1つのPull Requestを作成する。
 - Pull Request本文に `Closes #<Issue番号>` を記載する。
+- Pull Request作成後、必要に応じてPRコメントに `@coderabbitai review` と投稿し、CodeRabbitへ手動レビューを依頼する。
 - コミットメッセージは `docs:` や `feat:` などの種別を付け、説明部分を日本語で記載する。
 - Pull Requestはユーザーのレビュー後にMerge Commitで取り込む。Squash MergeとRebase Mergeは使用しない。
 - 親ブランチから作業ブランチを派生させず、前のPull Requestがマージされた後に最新の `main` から次のブランチを作成する。
