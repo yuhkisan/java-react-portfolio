@@ -1,6 +1,7 @@
 # 挙動仕様 (Behavior Spec)
 
-本ドキュメントは、Dependency Vulnerability Scanner の**挙動・制約・例外**を仕様として整理したものです。  
+本ドキュメントは、Dependency Vulnerability Scanner の**挙動・制約・例外**を仕様として整理したものです。
+
 ユーザー操作の手順は `docs/USER_MANUAL.md` を参照してください。
 
 ---
