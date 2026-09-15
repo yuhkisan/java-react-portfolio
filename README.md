@@ -2,15 +2,15 @@
 
 既存のNext.js製Dependency Vulnerability Scannerをフロントエンドとして引き継ぎ、Java 17とSpring BootによるREST APIを組み合わせるポートフォリオです。
 
-現在は設計段階です。以下の構成と技術スタックを順次実装します。
+現在は既存のNext.jsアプリを `frontend/` に取り込み済みです。バックエンドとローカル実行環境は、以下の構成と技術スタックで順次実装します。
 
-## 予定構成
+## 構成
 
 ```text
 java-react-portfolio/
-├─ frontend/        # Next.js
-├─ backend/         # Spring Boot REST API
-├─ compose.yaml     # ローカル実行環境
+├─ frontend/        # Next.js（実装済み）
+├─ backend/         # Spring Boot REST API（予定）
+├─ compose.yaml     # ローカル実行環境（予定）
 ├─ README.md
 └─ AGENTS.md
 ```
