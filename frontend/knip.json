@@ -1,0 +1,22 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "entry": [
+    "app/**/*.{ts,tsx}",
+    "playwright.config.cjs"
+  ],
+  "project": [
+    "app/**/*.{ts,tsx}",
+    "lib/**/*.ts",
+    "prisma/**/*.ts"
+  ],
+  "ignore": ["**/*.d.ts", "generated/**"],
+  "ignoreDependencies": [
+    "@prisma/client",
+    "@eslint/eslintrc",
+    "@eslint/js",
+    "@typescript-eslint/parser",
+    "eslint-plugin-react-hooks",
+    "globals",
+    "yaml"
+  ]
+}

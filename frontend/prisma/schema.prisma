@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// チーム（ワークスペース）
+model Team {
+  id        String    @id @default(cuid())
+  name      String
+  createdAt DateTime  @default(now())
+  projects  Project[]
+}
+
+// プロジェクト（アップロードされたpackage-lock.json）
+model Project {
+  id           String    @id @default(cuid())
+  name         String
+  fileName     String
+  uploadDate   DateTime  @default(now())
+  status       String    @default("analyzing") // analyzing | completed | failed
+  errorMessage String?
+  pkgCount     Int       @default(0)
+  teamId       String
+  team         Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  packages     Package[]
+}
+
+// パッケージ
+model Package {
+  id        String   @id @default(cuid())
+  name      String
+  version   String
+  isDirect  Boolean  // package.jsonに直接書かれているか
+  dependencyType String @default("prod") // prod | dev
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  // 依存関係（多対多・自己参照）
+  dependencies PackageDependency[] @relation("DependsOn")
+  dependedBy   PackageDependency[] @relation("DependedBy")
+
+  // 脆弱性（1対1、あれば）
+  vulnerability Vulnerability?
+
+  @@unique([projectId, name, version])
+}
+
+// パッケージ間の依存関係（中間テーブル）
+model PackageDependency {
+  id         String  @id @default(cuid())
+  dependerId String  // 依存する側のパッケージID
+  dependeeId String  // 依存される側のパッケージID
+  depender   Package @relation("DependsOn", fields: [dependerId], references: [id], onDelete: Cascade)
+  dependee   Package @relation("DependedBy", fields: [dependeeId], references: [id], onDelete: Cascade)
+
+  @@unique([dependerId, dependeeId])
+}
+
+// 脆弱性情報
+model Vulnerability {
+  id          String  @id @default(cuid())
+  severity    String  // critical | high | medium | low | info
+  cve         String? // CVE-XXXX-XXXXX
+  title       String
+  description String
+  fixedIn     String? // 修正されたバージョン
+  url         String? // 参照URL
+  packageId   String  @unique
+  package     Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
+}
