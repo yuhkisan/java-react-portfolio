@@ -81,7 +81,7 @@ export const UploadArea = ({
       >
         {isDragActive
           ? "ここにファイルをドロップ"
-          : "SBOMファイルをアップロード"}
+          : "依存関係ファイルをアップロード"}
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
         package-lock.json / package.json（JSON・5MB以下）をドラッグ＆ドロップ

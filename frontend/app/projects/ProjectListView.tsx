@@ -109,7 +109,7 @@ export const ProjectListView = async ({ teamId }: { teamId?: string }) => {
               sx={{ mb: 4, maxWidth: 500, lineHeight: 1.6 }}
             >
               このチーム「{currentTeam.name}
-              」にはまだ解析済みのSBOMがありません。
+              」にはまだ解析済みの依存関係情報がありません。
               <br />
               新しいファイルをアップロードして、脆弱性スキャンを開始しましょう。
             </Typography>
@@ -120,7 +120,7 @@ export const ProjectListView = async ({ teamId }: { teamId?: string }) => {
                 startIcon={<UploadCloud size={20} />}
                 sx={{ px: 4, py: 1.5 }}
               >
-                SBOMをアップロード
+                依存関係ファイルをアップロード
               </Button>
             </Link>
           </Paper>
