@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+
+backend/target/
+frontend/node_modules/
+frontend/.next/
+frontend/generated/
+frontend/coverage/
+frontend/*.db
+frontend/*.db-*
+
+.idea/
+.vscode/
+*.log
