@@ -1,0 +1,13 @@
+node_modules/
+.next/
+generated/
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+.env
+.env.*
+.git/
+coverage/
+playwright-report/
+test-results/
