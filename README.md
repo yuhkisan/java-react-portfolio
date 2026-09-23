@@ -2,14 +2,14 @@
 
 既存のNext.js製Dependency Vulnerability Scannerをフロントエンドとして引き継ぎ、Java 17とSpring BootによるREST APIを組み合わせるポートフォリオです。
 
-現在は既存のNext.jsアプリを `frontend/` に取り込み済みです。バックエンドとローカル実行環境は、以下の構成と技術スタックで順次実装します。
+現在は既存のNext.jsアプリを `frontend/` に取り込み、Spring Bootの最小アプリを `backend/` に追加しています。REST APIやDocker Composeは今後実装します。
 
 ## 構成
 
 ```text
 java-react-portfolio/
 ├─ frontend/        # Next.js（実装済み）
-├─ backend/         # Spring Boot REST API（予定）
+├─ backend/         # Spring Bootの最小アプリ（REST APIは未実装）
 ├─ compose.yaml     # ローカル実行環境（予定）
 ├─ README.md
 └─ AGENTS.md
@@ -44,6 +44,17 @@ Next.jsは基本的にクライアントサイドのSPAとして使用する予�
 - JUnit
 - MockMvc
 - Testcontainers
+
+## バックエンド単体の起動
+
+Dockerを起動し、このREADME.mdがあるフォルダで以下を実行します。ローカルへのMavenのインストールは不要です。
+
+```powershell
+docker build -t java-react-backend:local ./backend
+docker run --rm --name java-react-backend-standalone -p 127.0.0.1:18080:8080 java-react-backend:local
+```
+
+Dockerfileのビルド工程にはテストが含まれています。起動ログに `Started PortfolioApplication` が出れば起動完了です。停止するには `Ctrl+C` を押します。まだAPIがないため、`http://localhost:18080/` は404を返します。
 
 ## 予定するローカル開発環境
 
