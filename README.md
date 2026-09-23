@@ -54,6 +54,13 @@ Copy-Item .env.example .env
 docker compose up --build
 ```
 
+macOS/Linuxの場合:
+
+```sh
+cp .env.example .env
+docker compose up --build
+```
+
 - Next.js: http://localhost:3000
 - Spring Bootヘルスチェック: http://localhost:8080/actuator/health （DB接続が正常なら `{"status":"UP"}`）
 - 停止: `docker compose down`。データを残すため `--volumes` は付けません。
