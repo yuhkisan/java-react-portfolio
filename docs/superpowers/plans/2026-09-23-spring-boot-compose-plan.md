@@ -125,7 +125,7 @@
 
 - [ ] **Step 2: Composeを書く**
 
-  `compose.yaml`に`db`、`backend`、`frontend`を定義する。`db`は`postgres:17`、`pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}`のヘルスチェック、`pgdata`を使用する。`backend`は`db`の`service_healthy`に依存し、`SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${POSTGRES_DB}`などを渡す。`frontend`は`backend`の起動後に開始し、`DATABASE_URL=file:/data/dev.db`と`sqlite_data:/data`を設定する。ホストへ3000、8080を公開する。
+  `compose.yaml`に`db`、`backend`、`frontend`を定義する。`db`は`postgres:17`、`pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}`のヘルスチェック、`pgdata`を使用する。一時的なUnix socketサーバーをhealthyと判定しない。`backend`は`db`の`service_healthy`に依存し、`SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${POSTGRES_DB}`などを渡す。`frontend`は`backend`の起動後に開始し、`DATABASE_URL=file:/data/dev.db`と`sqlite_data:/data`を設定する。ホストへ3000、8080を公開する。
 
   ```yaml
   services:
@@ -138,7 +138,7 @@
       volumes:
         - pgdata:/var/lib/postgresql/data
       healthcheck:
-        test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+        test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
         interval: 5s
         timeout: 3s
         retries: 10
