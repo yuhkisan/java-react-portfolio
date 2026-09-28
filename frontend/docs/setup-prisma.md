@@ -6,18 +6,18 @@
 
 ```bash
 # 開発用依存関係
-npm install prisma tsx @types/better-sqlite3 --save-dev
+pnpm add --save-dev prisma tsx @types/better-sqlite3
 
 # 実行用依存関係
 # prisma@7 では SQLite のためにアダプターが必要です
-npm install @prisma/client @prisma/adapter-better-sqlite3 dotenv
+pnpm add @prisma/client @prisma/adapter-better-sqlite3 dotenv
 ```
 
 ## 2. Prisma の初期化 (SQLite)
 
 ```bash
 # NOTE: output オプションで生成先を明示的に指定する場合
-npx prisma init --datasource-provider sqlite --output ../generated/prisma
+pnpm exec prisma init --datasource-provider sqlite --output ../generated/prisma
 ```
 
 ## 3. 設定ファイル設定
@@ -123,13 +123,13 @@ main()
 
 ```bash
 # マイグレーション実行とクライアント生成
-npx prisma migrate dev --name init
+pnpm exec prisma migrate dev --name init
 
 # シードデータの投入
-npx prisma db seed
+pnpm exec prisma db seed
 
 # Prisma Studio の起動
-npx prisma studio
+pnpm exec prisma studio
 ```
 
 ## 7. `.gitignore` 設定
