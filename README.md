@@ -54,7 +54,7 @@ docker build -t java-react-backend:local ./backend
 docker run --rm --name java-react-backend-standalone -p 127.0.0.1:18080:8080 java-react-backend:local
 ```
 
-Dockerfileのビルド工程にはテストが含まれています。起動ログに `Started PortfolioApplication` が出れば起動完了です。停止するには `Ctrl+C` を押します。まだAPIがないため、`http://localhost:18080/` は404を返します。
+Dockerfileのビルド工程にはテストが含まれています。起動ログに `Started DependencyVulnerabilityScannerApplication` が出れば起動完了です。停止するには `Ctrl+C` を押します。まだAPIがないため、`http://localhost:18080/` は404を返します。
 
 ## 予定するローカル開発環境
 
