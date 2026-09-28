@@ -1,13 +1,13 @@
-# Java React Portfolio
+# Dependency Vulnerability Scanner
 
-既存のNext.js製Dependency Vulnerability Scannerをフロントエンドとして引き継ぎ、Java 25とSpring BootによるREST APIを組み合わせるポートフォリオです。
+Dependency Vulnerability Scanner は、依存関係の脆弱性スキャンを学ぶために開発しているアプリです。Next.js のフロントエンドと Java 25・Spring Boot の REST API を組み合わせる構成を目指しています。
 
-現在は既存のNext.jsアプリを `frontend/` に取り込み、Spring Bootの最小アプリを `backend/` に追加しています。REST APIやDocker Composeは今後実装します。
+現在は既存の Next.js アプリを `frontend/` に配置し、`backend/` に Spring Boot の最小アプリを用意しています。REST API と Docker Compose は今後実装します。
 
 ## 構成
 
 ```text
-java-react-portfolio/
+dependency-vulnerability-scanner/
 ├─ frontend/        # Next.js（実装済み）
 ├─ backend/         # Spring Bootの最小アプリ（REST APIは未実装）
 ├─ compose.yaml     # ローカル実行環境（予定）
@@ -50,8 +50,8 @@ Next.jsは基本的にクライアントサイドのSPAとして使用する予�
 Dockerを起動し、このREADME.mdがあるフォルダで以下を実行します。ローカルへのMavenのインストールは不要です。
 
 ```powershell
-docker build -t java-react-backend:local ./backend
-docker run --rm --name java-react-backend-standalone -p 127.0.0.1:18080:8080 java-react-backend:local
+docker build -t dependency-vulnerability-scanner-backend:local ./backend
+docker run --rm --name dependency-vulnerability-scanner-backend-standalone -p 127.0.0.1:18080:8080 dependency-vulnerability-scanner-backend:local
 ```
 
 Dockerfileのビルド工程にはテストが含まれています。起動ログに `Started DependencyVulnerabilityScannerApplication` が出れば起動完了です。停止するには `Ctrl+C` を押します。まだAPIがないため、`http://localhost:18080/` は404を返します。
