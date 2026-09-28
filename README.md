@@ -1,6 +1,6 @@
 # Java React Portfolio
 
-既存のNext.js製Dependency Vulnerability Scannerをフロントエンドとして引き継ぎ、Java 17とSpring BootによるREST APIを組み合わせるポートフォリオです。
+既存のNext.js製Dependency Vulnerability Scannerをフロントエンドとして引き継ぎ、Java 25とSpring BootによるREST APIを組み合わせるポートフォリオです。
 
 現在は既存のNext.jsアプリを `frontend/` に取り込み、Spring Bootの最小アプリを `backend/` に追加しています。REST APIやDocker Composeは今後実装します。
 
@@ -32,7 +32,7 @@ Next.jsは基本的にクライアントサイドのSPAとして使用する予�
 
 ### Backend
 
-- Java 17
+- Java 25
 - Spring Boot 4.1.x
 - Maven
 - Spring Web MVC
