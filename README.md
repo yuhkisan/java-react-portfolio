@@ -68,6 +68,17 @@ cd backend
 
 Windows PowerShell では `./mvnw` の代わりに `.\mvnw.cmd` を実行してください。
 
+### バックエンドのコード整形
+
+`backend/` で次のコマンドを実行します。
+
+```sh
+./mvnw spotless:apply
+./mvnw spotless:check
+```
+
+`spotless:apply` はJavaコードを整形し、`spotless:check` は整形済みか確認します。`mvn verify` でも自動的に確認されます。
+
 ## 予定するローカル開発環境
 
 Next.js、Spring Boot、PostgreSQLはDocker Composeでまとめて起動できる構成にします。Next.jsは `localhost:3000`、Spring Bootは `localhost:8080` で公開する予定です。
