@@ -56,6 +56,18 @@ docker run --rm --name dependency-vulnerability-scanner-backend-standalone -p 12
 
 Dockerfileのビルド工程にはテストが含まれています。起動ログに `Started DependencyVulnerabilityScannerApplication` が出れば起動完了です。停止するには `Ctrl+C` を押します。まだAPIがないため、`http://localhost:18080/` は404を返します。
 
+## バックエンドのテスト
+
+ローカルで実行するには JDK 25 が必要です。`backend/` に移動して Maven Wrapper を使います。
+
+```sh
+cd backend
+./mvnw test
+./mvnw verify
+```
+
+Windows PowerShell では `./mvnw` の代わりに `.\mvnw.cmd` を実行してください。
+
 ## 予定するローカル開発環境
 
 Next.js、Spring Boot、PostgreSQLはDocker Composeでまとめて起動できる構成にします。Next.jsは `localhost:3000`、Spring Bootは `localhost:8080` で公開する予定です。
