@@ -77,7 +77,7 @@ Windows PowerShell では `./mvnw` の代わりに `.\mvnw.cmd` を実行して�
 ./mvnw spotless:check
 ```
 
-`spotless:apply` はJavaコードを整形し、`spotless:check` は整形済みか確認します。`mvn verify` でも自動的に確認されます。
+`spotless:apply` はJavaコードを整形し、`spotless:check` は整形済みか確認します。`./mvnw verify` でも自動的に確認されます。
 
 ## 予定するローカル開発環境
 
