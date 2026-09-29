@@ -47,11 +47,19 @@ Next.jsは基本的にクライアントサイドのSPAとして使用する予�
 
 ## バックエンド単体の起動
 
-PostgreSQLを起動し、このREADME.mdがあるフォルダで以下を実行します。ローカルへのMavenのインストールは不要です。Dockerコンテナからホスト上のPostgreSQLには `host.docker.internal` で接続します。
+このREADME.mdがあるフォルダで以下を実行します。ローカルへのMavenのインストールは不要です。最初にPostgreSQLを起動し、次にバックエンドを起動します。Dockerコンテナからホスト上のPostgreSQLには `host.docker.internal` で接続します。
 
 ```powershell
+docker run --rm --name dependency-vulnerability-scanner-postgres `
+  -e POSTGRES_DB=dependency_vulnerability_scanner `
+  -e POSTGRES_USER=app `
+  -e POSTGRES_PASSWORD=dummy-password `
+  -p 5432:5432 `
+  -d postgres:18-alpine
+
 docker build -t dependency-vulnerability-scanner-backend:local ./backend
 docker run --rm --name dependency-vulnerability-scanner-backend-standalone -p 127.0.0.1:18080:8080 `
+  --add-host host.docker.internal=host-gateway `
   -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/dependency_vulnerability_scanner `
   -e SPRING_DATASOURCE_USERNAME=app `
   -e SPRING_DATASOURCE_PASSWORD=dummy-password `
@@ -66,7 +74,7 @@ docker run --rm --name dependency-vulnerability-scanner-backend-standalone -p 12
 | `SPRING_DATASOURCE_USERNAME` | `app` |
 | `SPRING_DATASOURCE_PASSWORD` | `dummy-password` |
 
-起動ログに `Started DependencyVulnerabilityScannerApplication` が出れば起動完了です。`http://localhost:18080/actuator/health` が `UP` を返し、DBの状態も確認できます。停止するには `Ctrl+C` を押します。Dockerfileのビルド工程ではテストを実行せず、DBを使う統合テストはMaven Wrapperで実行します。
+起動ログに `Started DependencyVulnerabilityScannerApplication` が出れば起動完了です。`http://localhost:18080/actuator/health` が `UP` を返し、DBの状態も確認できます。バックエンドを止めるには `Ctrl+C` を押し、PostgreSQLは別のPowerShellで `docker stop dependency-vulnerability-scanner-postgres` を実行して停止します。Dockerfileのビルド工程ではテストを実行せず、DBを使う統合テストはMaven Wrapperで実行します。
 
 ## バックエンドのテスト
 
