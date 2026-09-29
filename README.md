@@ -2,7 +2,7 @@
 
 Dependency Vulnerability Scanner は、依存関係の脆弱性スキャンを学ぶために開発しているアプリです。Next.js のフロントエンドと Java 25・Spring Boot の REST API を組み合わせる構成を目指しています。
 
-現在は既存の Next.js アプリを `frontend/` に配置し、`backend/` に Spring Boot の最小アプリを用意しています。REST API と Docker Compose は今後実装します。
+現在は既存の Next.js アプリを `frontend/` に配置し、`backend/` に Spring Boot アプリを用意しています。REST API と Docker Compose は今後実装します。
 
 ## 構成
 
@@ -47,14 +47,26 @@ Next.jsは基本的にクライアントサイドのSPAとして使用する予�
 
 ## バックエンド単体の起動
 
-Dockerを起動し、このREADME.mdがあるフォルダで以下を実行します。ローカルへのMavenのインストールは不要です。
+PostgreSQLを起動し、このREADME.mdがあるフォルダで以下を実行します。ローカルへのMavenのインストールは不要です。Dockerコンテナからホスト上のPostgreSQLには `host.docker.internal` で接続します。
 
 ```powershell
 docker build -t dependency-vulnerability-scanner-backend:local ./backend
-docker run --rm --name dependency-vulnerability-scanner-backend-standalone -p 127.0.0.1:18080:8080 dependency-vulnerability-scanner-backend:local
+docker run --rm --name dependency-vulnerability-scanner-backend-standalone -p 127.0.0.1:18080:8080 `
+  -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/dependency_vulnerability_scanner `
+  -e SPRING_DATASOURCE_USERNAME=app `
+  -e SPRING_DATASOURCE_PASSWORD=dummy-password `
+  dependency-vulnerability-scanner-backend:local
 ```
 
-Dockerfileのビルド工程にはテストが含まれています。起動ログに `Started DependencyVulnerabilityScannerApplication` が出れば起動完了です。停止するには `Ctrl+C` を押します。まだAPIがないため、`http://localhost:18080/` は404を返します。
+アプリケーションは次の環境変数でPostgreSQLに接続します。以下はローカル開発用の例です。パスワードは実際に使用する環境に合わせて設定してください。
+
+| 環境変数 | ローカルの例 |
+| --- | --- |
+| `SPRING_DATASOURCE_URL` | `jdbc:postgresql://localhost:5432/dependency_vulnerability_scanner` |
+| `SPRING_DATASOURCE_USERNAME` | `app` |
+| `SPRING_DATASOURCE_PASSWORD` | `dummy-password` |
+
+起動ログに `Started DependencyVulnerabilityScannerApplication` が出れば起動完了です。`http://localhost:18080/actuator/health` が `UP` を返し、DBの状態も確認できます。停止するには `Ctrl+C` を押します。Dockerfileのビルド工程ではテストを実行せず、DBを使う統合テストはMaven Wrapperで実行します。
 
 ## バックエンドのテスト
 
