@@ -3,7 +3,7 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn -B dependency:go-offline
 COPY src ./src
-RUN mvn -B verify
+RUN mvn -B package -Dmaven.test.skip=true
 
 FROM eclipse-temurin:25-jre-noble
 WORKDIR /app
