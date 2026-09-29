@@ -45,8 +45,8 @@ tests/e2e/             # Playwright E2E
 
 ### 前提条件
 
-- Node.js 22.13 以上（pnpm 12 のインストールに必要）
-- pnpm 12.6.0（Corepack 経由で package.json の `packageManager` に固定）
+- Node.js 22.13 以上（CI と同じ Node.js 22 系）
+- pnpm（最初に1回だけ `npx get-pnpm` でインストールします。このプロジェクトで使うバージョン 12.6.0 は `package.json` の `packageManager` で固定されていて、pnpm が自動で切り替えます）
 
 ### インストール
 
@@ -65,6 +65,7 @@ DATABASE_URL="file:./dev.db"
 ### DB 準備
 
 ```bash
+pnpm exec prisma generate
 pnpm run db:push
 pnpm run db:seed
 ```
