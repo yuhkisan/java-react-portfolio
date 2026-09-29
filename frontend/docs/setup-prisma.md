@@ -10,7 +10,7 @@ pnpm add --save-dev prisma tsx @types/better-sqlite3
 
 # 実行用依存関係
 # prisma@7 では SQLite のためにアダプターが必要です
-pnpm add @prisma/client @prisma/adapter-better-sqlite3 dotenv
+pnpm add @prisma/client @prisma/adapter-better-sqlite3 better-sqlite3 dotenv
 ```
 
 ## 2. Prisma の初期化 (SQLite)
