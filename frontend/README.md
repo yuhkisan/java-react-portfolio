@@ -45,13 +45,13 @@ tests/e2e/             # Playwright E2E
 
 ### 前提条件
 
-- Node.js 18 以上
-- npm
+- Node.js 22.13 以上（CI と同じ Node.js 22 系）
+- pnpm（最初に1回だけ `npx get-pnpm` でインストールします。このプロジェクトで使うバージョン 12.6.0 は `package.json` の `packageManager` で固定されていて、pnpm が自動で切り替えます）
 
 ### インストール
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### 環境変数
@@ -65,14 +65,15 @@ DATABASE_URL="file:./dev.db"
 ### DB 準備
 
 ```bash
-npm run db:push
-npm run db:seed
+pnpm exec prisma generate
+pnpm run db:push
+pnpm run db:seed
 ```
 
 ### 開発サーバー
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 ## 🎯 使い方（概要）
@@ -91,10 +92,10 @@ npm run dev
 ## 🧪 テスト
 
 ```bash
-npm test          # Vitest
-npm run test:e2e  # Playwright
-npm run lint
-npm run build
+pnpm test          # Vitest
+pnpm run test:e2e  # Playwright
+pnpm run lint
+pnpm run build
 ```
 
 ## 📝 開発メモ

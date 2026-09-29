@@ -2,6 +2,7 @@
   "name": "dependency-vulnerability-scanner-frontend",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@12.6.0",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
@@ -24,6 +25,7 @@
     "@mui/material": "^7.3.6",
     "@prisma/adapter-better-sqlite3": "^7.2.0",
     "@prisma/client": "^7.2.0",
+    "better-sqlite3": "12.5.0",
     "dotenv": "^17.2.3",
     "lucide-react": "^0.562.0",
     "next": "^16.1.0",
