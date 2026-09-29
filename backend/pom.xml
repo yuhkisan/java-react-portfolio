@@ -28,6 +28,10 @@
 	</scm>
 	<properties>
 		<java.version>25</java.version>
+		<!-- Spring Boot 4.1.1 管理の Jackson Databind 3.1.5 は GHSA-gx83-3vf8-gh7j、GHSA-q4xh-88c3-wmh7、GHSA-wjgm-6hv5-3cvf の影響を受けるため、修正版に固定。Spring Boot 更新時は新しい管理版を確認してこの指定を削除する。 -->
+		<jackson-bom.version>3.1.7</jackson-bom.version>
+		<!-- Spring Boot 4.1.1 管理の Tomcat 11.0.24 は GHSA-9xv2-5v5q-p794、GHSA-gcx9-497g-6cp6、GHSA-h3x4-894j-xpx5 の影響を受けるため、修正版に固定。Spring Boot 更新時は新しい管理版を確認してこの指定を削除する。 -->
+		<tomcat.version>11.0.26</tomcat.version>
 	</properties>
 	<dependencies>
 		<dependency>
