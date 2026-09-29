@@ -7,6 +7,7 @@ allowBuilds:
   unrs-resolver: false
 
 overrides:
+  # GHSA-ggr8-5vv4-36mx は 7 系で未修正。Prisma 7.2 の要求版 7.1.5 を 8.0.2 に上書きする。
   "@prisma/config>deepmerge-ts": 8.0.2
   "@hono/node-server": 1.19.15
   effect: 3.20.0
